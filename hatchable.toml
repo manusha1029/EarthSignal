@@ -1,0 +1,4 @@
+[ai]
+required = true
+providers = ["openai"]
+description = "OpenAI vision analysis for EarthSignal pollution evidence. Configure an AI key in project setup."

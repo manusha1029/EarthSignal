@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123d32">
+  <meta name="description" content="EarthSignal helps communities document visible pollution and turn environmental evidence into action.">
+  <title>EarthSignal — Environmental Evidence to Action</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#home"><span class="brand-mark">✳</span><span>earth<span class="brand-light">signal</span><small>ENVIRONMENTAL INTELLIGENCE</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-links"><a class="nav-link active" href="#home"><span>▦</span> Overview</a><a class="nav-link" href="#map-section"><span>⌖</span> Pollution map</a><a class="nav-link" href="#reports-section"><span>☷</span> Reports <span class="nav-count" id="nav-count">0</span></a></nav>
+      <div class="sidebar-bottom"><div class="earth-card"><span class="earth-icon">🌱</span><strong>Small signals.<br>Meaningful change.</strong><p>Every documented issue is a step toward a cleaner community.</p></div><div class="open-source"><span class="green-dot"></span> Community-powered · Open vision</div></div>
+    </aside>
+    <main class="main-content" id="home">
+      <header class="topbar"><div class="mobile-brand">✳ earthsignal</div><div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div><div class="topbar-right"><span class="live-pill"><i></i> Community dashboard</span><div class="avatar">ES</div></div></header>
+      <section class="welcome-row"><div><div class="eyebrow"><span class="eyebrow-line"></span> ENVIRONMENTAL EVIDENCE, MADE USEFUL</div><h1>Give the planet<br><span> a clearer voice.</span></h1><p class="welcome-copy">Document visible pollution. Build a record of what’s happening.<br class="desktop-only"> Help communities turn evidence into action.</p></div><button class="primary-button" id="jump-report"><span>＋</span> Report an issue</button></section>
+      <section class="stats-grid" aria-label="Report statistics"><article class="stat-card"><div class="stat-top"><span>Total reports</span><span class="stat-icon sage">▤</span></div><div class="stat-value" id="stat-total">0</div><div class="stat-foot">Evidence submitted by the community</div></article><article class="stat-card"><div class="stat-top"><span>Needs review</span><span class="stat-icon amber">◷</span></div><div class="stat-value" id="stat-review">0</div><div class="stat-foot">Waiting for a human check</div></article><article class="stat-card"><div class="stat-top"><span>Resolved</span><span class="stat-icon blue">✓</span></div><div class="stat-value" id="stat-resolved">0</div><div class="stat-foot">Marked as cleaned up or addressed</div></article><article class="stat-card"><div class="stat-top"><span>Waste categories</span><span class="stat-icon violet">⌁</span></div><div class="stat-value" id="stat-categories">0</div><div class="stat-foot">Different issue types reported</div></article></section>
+      <div class="content-grid">
+        <section class="panel report-panel" id="report-section"><div class="panel-heading"><div><div class="section-kicker">ADD TO THE RECORD</div><h2>Report an environmental issue</h2><p>Share what you saw. Clear evidence helps others understand the problem.</p></div><span class="step-badge">01 / REPORT</span></div>
+          <form id="report-form"><label class="field-label" for="issue-title">Report title <span>*</span></label><input id="issue-title" name="title" required maxlength="90" placeholder="e.g. Plastic waste beside the canal">
+            <div class="form-two"><div><label class="field-label" for="category">Issue category <span>*</span></label><select id="category" name="category" required><option value="Plastic waste">Plastic waste</option><option value="Illegal dumping">Illegal dumping</option><option value="Sewage / wastewater">Sewage / wastewater</option><option value="Construction debris">Construction debris</option><option value="Water pollution">Water pollution</option><option value="Air pollution">Air pollution</option><option value="Other">Other</option></select></div><div><label class="field-label" for="location">Location or landmark <span>*</span></label><input id="location" name="location" required maxlength="120" placeholder="Street, area, nearby landmark"></div></div>
+            <label class="field-label" for="photo">Photo evidence <span>*</span></label><label class="upload-zone" for="photo"><span class="upload-icon">↑</span><strong id="upload-title">Choose a photo to upload</strong><span id="upload-hint">JPG, PNG or WEBP · up to 8 MB</span><input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp" required><span class="browse-link">Browse files</span></label><img id="photo-preview" class="photo-preview" alt="Selected evidence preview" hidden>
+            <label class="field-label" for="description">What did you observe? <span class="optional">OPTIONAL</span></label><textarea id="description" name="description" rows="3" maxlength="600" placeholder="Describe what is visible, when you noticed it, or any relevant context..."></textarea>
+            <div class="privacy-note"><span>ⓘ</span><span>Only report what you can observe. Avoid including people’s faces, private information, or assumptions about who is responsible.</span></div><button class="primary-button submit-button" type="submit"><span>＋</span> Submit report <span class="button-arrow">↗</span></button><p class="form-message" id="form-message" role="status"></p>
+          </form>
+        </section>
+        <section class="panel map-panel" id="map-section"><div class="panel-heading map-heading"><div><div class="section-kicker">SEE THE BIGGER PICTURE</div><h2>Community pollution map</h2><p>Explore where reports have been submitted.</p></div><span class="map-pin-icon">⌖</span></div><div id="map" role="application" aria-label="Map showing environmental reports"></div><div class="map-tools"><button class="mini-button" type="button" id="use-my-location">◎ Use my current location</button><span id="coordinate-status" role="status">Tap the map to select the report location.</span></div><div class="map-legend"><span><i class="legend-dot pending"></i> Submitted / review</span><span><i class="legend-dot resolved"></i> Resolved</span></div><div class="map-note">Map pins reflect user-submitted locations. A pin is not proof that an allegation has been verified.</div></section>
+      </div>
+      <section class="panel reports-panel" id="reports-section"><div class="panel-heading reports-heading"><div><div class="section-kicker">COMMUNITY EVIDENCE LOG</div><h2>Recent reports <span class="count-chip" id="reports-count">0</span></h2><p>Each report keeps its evidence and status together.</p></div><div class="filter-wrap"><label class="sr-only" for="status-filter">Filter reports by status</label><select id="status-filter"><option value="all">All statuses</option><option value="Submitted">Submitted</option><option value="Under review">Under review</option><option value="Resolved">Resolved</option></select></div></div><div id="reports-list" class="reports-list"><div class="empty-state"><span class="empty-icon">⌖</span><strong>No reports yet</strong><p>Be the first to document an environmental issue in your community.</p></div></div></section>
+      <footer><span>✳ earthsignal</span><span>Evidence first. Action follows.</span><span>Prototype · Reports require verification</span></footer>
+    </main>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
